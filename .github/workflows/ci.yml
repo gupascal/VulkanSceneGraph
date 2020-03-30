@@ -24,13 +24,18 @@ jobs:
     - name: make
       run: make -j 2
 
-#  windows-build:
-#
-#    runs-on: windows-latest
-#
-#    steps:
-#    - uses: actions/checkout@v2
-#    - name: CMake
-#      run: cmake . -G "Visual Studio 16 2019" -A x64
-#    - name: MSBuild
-#      run: MSBuild.exe VSG.sln
+  windows-build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Vulkan SDK
+      run: |
+        wget https://vulkan.lunarg.com/sdk/home#sdk/downloadConfirm/latest/windows/vulkan-sdk.exe -OutFile vulkan-sdk.exe
+        .\vulkan-sdk.exe /S
+      shell: pwsh
+    - name: CMake
+      run: cmake . -G "Visual Studio 16 2019" -A x64
+    - name: MSBuild
+      run: MSBuild.exe VSG.sln
