@@ -31,7 +31,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install Vulkan SDK
-      shell: pwsh
+      shell: powershell
       run: |
         wget https://sdk.lunarg.com/sdk/download/latest/windows/vulkan-sdk.exe?u= -OutFile vulkan-sdk.exe
         Write-Output Downloaded.
