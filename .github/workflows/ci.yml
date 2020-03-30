@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [ master, ci ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  linux-build:
+
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Vulkan SDK
+      run: |
+        wget -qO - http://packages.lunarg.com/lunarg-signing-key-pub.asc | sudo apt-key add -
+        sudo wget -qO /etc/apt/sources.list.d/lunarg-vulkan-1.2.131-bionic.list http://packages.lunarg.com/vulkan/1.2.131/lunarg-vulkan-1.2.131-bionic.list
+        sudo apt update
+        sudo apt install vulkan-sdk
+    - name: CMake
+      run: cmake .
+    - name: make
+      run: make -j 2
+
+  windows-build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: CMake
+      run: cmake . -G "Visual Studio 16 2019 Win64"
+    - name: MSBuild
+      run: MSBuild.exe VSG.sln
