@@ -34,6 +34,7 @@ jobs:
       shell: pwsh
       run: |
         wget https://sdk.lunarg.com/sdk/download/latest/windows/vulkan-sdk.exe?u= -OutFile vulkan-sdk.exe
+        Write-Output Downloaded.
         .\vulkan-sdk.exe /S
     - name: CMake
       run: cmake . -G "Visual Studio 16 2019" -A x64
