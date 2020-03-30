@@ -36,6 +36,9 @@ jobs:
         wget https://sdk.lunarg.com/sdk/download/latest/windows/vulkan-sdk.exe?u= -OutFile vulkan-sdk.exe
         Write-Output Downloaded.
         .\vulkan-sdk.exe /S
+        Write-Output Installed.
+        ( gci env:* | sort-object name )
+#        setx /M VULKAN_SDK C:\VulkanSDK\1.2.131.2
     - name: CMake
       run: cmake . -G "Visual Studio 16 2019" -A x64
     - name: MSBuild
