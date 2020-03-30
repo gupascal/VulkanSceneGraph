@@ -31,10 +31,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install Vulkan SDK
+      shell: pwsh
       run: |
         wget https://sdk.lunarg.com/sdk/download/latest/windows/vulkan-sdk.exe?u= -OutFile vulkan-sdk.exe
         .\vulkan-sdk.exe /S
-      shell: pwsh
     - name: CMake
       run: cmake . -G "Visual Studio 16 2019" -A x64
     - name: MSBuild
