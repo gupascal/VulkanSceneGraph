@@ -36,6 +36,7 @@ jobs:
         wget https://sdk.lunarg.com/sdk/download/latest/windows/vulkan-sdk.exe?u= -OutFile vulkan-sdk.exe
         Write-Output Downloaded.
         .\vulkan-sdk.exe /S
+        ls -R -d 1 C:\VulkanSDK
         Write-Output Installed.
         ( gci env:* | sort-object name )
 #        setx /M VULKAN_SDK C:\VulkanSDK\1.2.131.2
