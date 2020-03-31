@@ -42,10 +42,11 @@ jobs:
       run: wget https://sdk.lunarg.com/sdk/download/1.2.131.2/windows/VulkanSDK-1.2.131.2-Installer.exe?u= -OutFile vulkan-sdk-1.2.131.2.exe
     - name: Install Vulkan SDK
       shell: powershell
+      run: .\vulkan-sdk-1.2.131.2.exe /S
+    - name: Check Vulkan SDK installation
+      shell: powershell
       run: |
-        .\vulkan-sdk-1.2.131.2.exe /S
         ls -R -d 1 C:\VulkanSDK
-        Write-Output Installed.
         ( gci env:* | sort-object name )
 #        setx /M VULKAN_SDK C:\VulkanSDK\1.2.131.2
     - name: CMake
