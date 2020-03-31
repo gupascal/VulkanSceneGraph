@@ -27,6 +27,8 @@ jobs:
   windows-build:
 
     runs-on: windows-latest
+    env:
+      VULKAN_SDK: C:\VulkanSDK\1.2.131.2
 
     steps:
     - uses: actions/checkout@v2
@@ -46,9 +48,9 @@ jobs:
     - name: Check Vulkan SDK installation
       shell: powershell
       run: |
-        Write-Output "::set-env name=VULKAN_SDK::C:\\VulkanSDK\\1.2.131.2"
         ls -R -d 1 C:\VulkanSDK
         ( gci env:* | sort-object name )
+#        Write-Output "::set-env name=VULKAN_SDK::C:\\VulkanSDK\\1.2.131.2"
 #        setx /M VULKAN_SDK C:\VulkanSDK\1.2.131.2
     - name: CMake
       run: cmake . -G "Visual Studio 16 2019" -A x64
