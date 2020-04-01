@@ -38,7 +38,7 @@ jobs:
       uses: actions/cache@v1.1.2
       with:
         path: ${{ env.CACHEDIR }}
-        key: vulkan-sdk
+        key: VulkanSdk
     - name: Download Vulkan SDK
       if: steps.cache.outputs.cache-hit != 'true'
       shell: powershell
