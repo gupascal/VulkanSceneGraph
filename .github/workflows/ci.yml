@@ -83,14 +83,20 @@ jobs:
 #    - name: Extract Vulkan SDK
 #      run: tar -zxvf vulkansdk-macos-1.2.131.2.tar.gz
     - name: Set Up Env Vars
-      uses: allenevans/set-env@v1.0.0
-      with:
-        overwrite: true
-        VULKAN_SDK: "./vulkansdk-macos-1.2.131.2"
-        VK_LAYER_PATH: "${{env.VULKAN_SDK}}/etc/vulkan/explicit_layer.d"
-        VK_ICD_FILENAMES: "${{env.VULKAN_SDK}}/etc/vulkan/icd.d/MoltenVK_icd.json"
-        PATH: "${{env.VULKAN_SDK}}:${{env.VULKAN_SDK}}/bin:${{env.PATH}}"
-        DYLD_LIBRARY_PATH: "${{env.VULKAN_SDK}}/lib:$DYLD_LIBRARY_PATH"
+      run: |
+        ( export VULKAN_SDK="/path/to/your/vulkansdk/macOS" )
+        ( export VK_LAYER_PATH="$VULKAN_SDK/etc/vulkan/explicit_layer.d" )
+        ( export VK_ICD_FILENAMES="$VULKAN_SDK/etc/vulkan/icd.d/MoltenVK_icd.json" )
+        ( export PATH="$VULKAN_SDK:$VULKAN_SDK/bin:$PATH" )
+        ( export DYLD_LIBRARY_PATH="$VULKAN_SDK/lib:$DYLD_LIBRARY_PATH" )
+#      uses: allenevans/set-env@v1.0.0
+#      with:
+#        overwrite: true
+#        VULKAN_SDK: "./vulkansdk-macos-1.2.131.2"
+#        VK_LAYER_PATH: "${{env.VULKAN_SDK}}/etc/vulkan/explicit_layer.d"
+#        VK_ICD_FILENAMES: "${{env.VULKAN_SDK}}/etc/vulkan/icd.d/MoltenVK_icd.json"
+#        PATH: "${{env.VULKAN_SDK}}:${{env.VULKAN_SDK}}/bin:${{env.PATH}}"
+#        DYLD_LIBRARY_PATH: "${{env.VULKAN_SDK}}/lib:$DYLD_LIBRARY_PATH"
     - name: Debug output
       run: |
         ls 
