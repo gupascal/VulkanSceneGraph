@@ -63,5 +63,5 @@ jobs:
 #        setx /M VULKAN_SDK C:\VulkanSDK\1.2.131.2
     - name: CMake
       run: cmake . -G "Visual Studio 16 2019" -A x64
-    - name: MSBuild
-      run: MSBuild.exe VSG.sln
+#    - name: MSBuild
+#      run: MSBuild.exe VSG.sln
