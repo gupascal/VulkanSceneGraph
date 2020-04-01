@@ -62,7 +62,7 @@ jobs:
       shell: powershell
       run: |
         ls -R -d 1 C:\VulkanSDK\${{env.VulkanSDKVersion}}
-#        ( gci env:* | sort-object name )
+        ( gci env:* | sort-object name )
     - name: CMake
       run: cmake . -G "Visual Studio 16 2019" -A x64
     - name: Add MSBuild to PATH
