@@ -77,7 +77,6 @@ jobs:
       VULKAN_SDK: "./vulkansdk-macos-1.2.131.2"
       VK_LAYER_PATH: "$VULKAN_SDK/etc/vulkan/explicit_layer.d"
       VK_ICD_FILENAMES: "$VULKAN_SDK/etc/vulkan/icd.d/MoltenVK_icd.json"
-      PATH: "$VULKAN_SDK:$VULKAN_SDK/bin:${{env.PATH}}"
       DYLD_LIBRARY_PATH: "$VULKAN_SDK/lib:$DYLD_LIBRARY_PATH"
     
     steps:
@@ -103,6 +102,7 @@ jobs:
 #        DYLD_LIBRARY_PATH: "${{env.VULKAN_SDK}}/lib:$DYLD_LIBRARY_PATH"
     - name: Debug output
       run: |
+        export PATH="$VULKAN_SDK:$VULKAN_SDK/bin:$PATH"
         ls 
         echo "Path: $VULKAN_SDK"
         echo "Path: $PATH"
