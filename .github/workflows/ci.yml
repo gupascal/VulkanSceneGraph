@@ -38,7 +38,7 @@ jobs:
       uses: actions/cache@v1.1.2
       with:
         path: ${{ env.CACHEDIR }}
-        key: VulkanSdk
+        key: VulkanSdk2
     - name: Download Vulkan SDK
       if: steps.cache.outputs.cache-hit != 'true'
       shell: powershell
@@ -47,11 +47,11 @@ jobs:
           New-Item -ItemType directory -Path ${{ env.CACHEDIR }}
           Write-Output "New folder created"
         }
-        wget https://sdk.lunarg.com/sdk/download/1.2.131.2/windows/VulkanSDK-1.2.131.2-Installer.exe?u= -OutFile vulkan-sdk-1.2.131.2.exe
+        wget https://sdk.lunarg.com/sdk/download/1.2.131.2/windows/VulkanSDK-1.2.131.2-Installer.exe?u= -OutFile ${{ env.CACHEDIR }}/vulkan-sdk-1.2.131.2.exe
     - name: Install Vulkan SDK
       shell: powershell
       run: |
-        $installer = Start-Process -FilePath vulkan-sdk-1.2.131.2.exe -Wait -PassThru -ArgumentList @("/S");
+        $installer = Start-Process -FilePath ${{ env.CACHEDIR }}/vulkan-sdk-1.2.131.2.exe -Wait -PassThru -ArgumentList @("/S");
         $installer.WaitForExit();
 #      run: .\vulkan-sdk-1.2.131.2.exe /S
     - name: Check Vulkan SDK installation
