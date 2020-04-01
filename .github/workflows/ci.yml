@@ -36,15 +36,15 @@ jobs:
       id: cache
       uses: actions/cache@v1.1.2
       with:
-        path: vulkan-sdk-1.2.131.2.exe
+        path: vulkan-sdk-1.2.131.2.exe.zip
         key: vulkan-sdk
     - name: Download Vulkan SDK
       if: steps.cache.outputs.cache-hit != 'true'
       shell: powershell
-      run: wget https://sdk.lunarg.com/sdk/download/1.2.131.2/windows/VulkanSDK-1.2.131.2-Installer.exe?u= -OutFile vulkan-sdk-1.2.131.2.exe
+      run: wget https://sdk.lunarg.com/sdk/download/1.2.131.2/windows/VulkanSDK-1.2.131.2-Installer.exe?u= -OutFile vulkan-sdk-1.2.131.2.exe.zip
     - name: Install Vulkan SDK
       shell: powershell
-      run: Expand-Archive -Path vulkan-sdk-1.2.131.2.exe -DestinationPath .\vulkan-sdk-1.2.131.2
+      run: Expand-Archive -Path vulkan-sdk-1.2.131.2.exe.zip -DestinationPath .\vulkan-sdk-1.2.131.2
 #      run: .\vulkan-sdk-1.2.131.2.exe /S
     - name: Check Vulkan SDK installation
       shell: powershell
