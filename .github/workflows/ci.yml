@@ -33,7 +33,7 @@ jobs:
     runs-on: windows-latest
     env:
       CacheDir: cache-dir
-#      VulkanSdk: C:\VulkanSDK\${{env.VulkanSDKVersion}}
+      VulkanSdk: C:\VulkanSDK\${{env.VulkanSDKVersion}}
       VulkanSDKVersion: 1.2.131.2
 
     steps:
