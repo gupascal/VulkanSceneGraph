@@ -70,3 +70,16 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.0
     - name: MSBuild
       run: MSBuild.exe ALL_BUILD.vcxproj -p:Configuration=Release
+
+  macos-build:
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Download Vulkan SDK
+      run: wget vulkansdk-macos-1.2.131.2.tar.gz https://sdk.lunarg.com/sdk/download/1.2.131.2/mac/vulkansdk-macos-1.2.131.2.tar.gz?u=
+    - name: Extract Vulkan SDK
+      run: tar -zxvf vulkansdk-macos-1.2.131.2.tar.gz
+    - name: Debug output
+      run: ls 
+      
