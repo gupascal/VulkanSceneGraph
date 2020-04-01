@@ -33,7 +33,6 @@ jobs:
     runs-on: windows-latest
     env:
       CacheDir: cache-dir
-      VulkanSdk: C:\VulkanSDK\1.2.131.2
       VulkanSDKVersion: 1.2.131.2
 
     steps:
@@ -65,6 +64,8 @@ jobs:
         ( gci env:* | sort-object name )
     - name: CMake
       run: cmake . -G "Visual Studio 16 2019" -A x64
+      env:
+        VULKAN_SDK: C:\VulkanSDK\${{env.VulkanSDKVersion}}
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.0
     - name: MSBuild
