@@ -36,21 +36,20 @@ jobs:
       id: cache
       uses: actions/cache@v1.1.2
       with:
-        path: vulkan-sdk-1.2.131.2.exe.zip
+        path: vulkan-sdk-1.2.131.2.exe
         key: vulkan-sdk
     - name: Download Vulkan SDK
       if: steps.cache.outputs.cache-hit != 'true'
       shell: powershell
-      run: wget https://sdk.lunarg.com/sdk/download/1.2.131.2/windows/VulkanSDK-1.2.131.2-Installer.exe?u= -OutFile vulkan-sdk-1.2.131.2.exe.zip
-    - name: Install Vulkan SDK
-      shell: powershell
-      run: Expand-Archive -Path vulkan-sdk-1.2.131.2.exe.zip -DestinationPath .\vulkan-sdk-1.2.131.2
+      run: wget https://sdk.lunarg.com/sdk/download/1.2.131.2/windows/VulkanSDK-1.2.131.2-Installer.exe?u= -OutFile vulkan-sdk-1.2.131.2.exe
+#    - name: Install Vulkan SDK
+#      shell: powershell
 #      run: .\vulkan-sdk-1.2.131.2.exe /S
-    - name: Check Vulkan SDK installation
-      shell: powershell
-      run: |
-        ls -R -d 1 .\vulkan-sdk-1.2.131.2
-        ( gci env:* | sort-object name )
+#    - name: Check Vulkan SDK installation
+#      shell: powershell
+#      run: |
+#        ls -R -d 1 .\vulkan-sdk-1.2.131.2
+#        ( gci env:* | sort-object name )
 #        Write-Output "::set-env name=VULKAN_SDK::C:\\VulkanSDK\\1.2.131.2"
 #        setx /M VULKAN_SDK C:\VulkanSDK\1.2.131.2
 #    - name: CMake
