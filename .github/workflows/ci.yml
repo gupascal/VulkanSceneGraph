@@ -28,7 +28,7 @@ jobs:
 
     runs-on: windows-latest
     env:
-      VULKAN_SDK: C:\VulkanSDK\1.2.131.2
+      VULKAN_SDK: .\vulkan-sdk-1.2.131.2
 
     steps:
     - uses: actions/checkout@v2
@@ -44,11 +44,12 @@ jobs:
       run: wget https://sdk.lunarg.com/sdk/download/1.2.131.2/windows/VulkanSDK-1.2.131.2-Installer.exe?u= -OutFile vulkan-sdk-1.2.131.2.exe
     - name: Install Vulkan SDK
       shell: powershell
-      run: .\vulkan-sdk-1.2.131.2.exe /S
+      run: Expand-Archive -Path vulkan-sdk-1.2.131.2.exe -DestinationPath .\vulkan-sdk-1.2.131.2
+#      run: .\vulkan-sdk-1.2.131.2.exe /S
     - name: Check Vulkan SDK installation
       shell: powershell
       run: |
-        ls -R -d 1 C:\VulkanSDK
+        ls -R -d 1 .\vulkan-sdk-1.2.131.2
         ( gci env:* | sort-object name )
 #        Write-Output "::set-env name=VULKAN_SDK::C:\\VulkanSDK\\1.2.131.2"
 #        setx /M VULKAN_SDK C:\VulkanSDK\1.2.131.2
