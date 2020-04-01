@@ -11,21 +11,14 @@ jobs:
 
     runs-on: ubuntu-18.04
     env:
-      CACHEDIR: /var/cache/apt/archives
+      VulkanSDKVersion: 1.2.131
 
     steps:
     - uses: actions/checkout@v2
-    - name: Cache
-      id: cache
-      uses: actions/cache@v1.1.2
-      with:
-        path: ${{ env.CACHEDIR }}
-        key: VulkanSdkLinux
     - name: Download Vulkan SDK
-      if: steps.cache.outputs.cache-hit != 'true'
       run: |
         ( wget -qO - http://packages.lunarg.com/lunarg-signing-key-pub.asc | sudo apt-key add - )
-        sudo wget -qO /etc/apt/sources.list.d/lunarg-vulkan-1.2.131-bionic.list http://packages.lunarg.com/vulkan/1.2.131/lunarg-vulkan-1.2.131-bionic.list
+        sudo wget -qO /etc/apt/sources.list.d/lunarg-vulkan-${{env.VulkanSDKVersion}}-bionic.list http://packages.lunarg.com/vulkan/${{env.VulkanSDKVersion}}/lunarg-vulkan-${{env.VulkanSDKVersion}}-bionic.list
         sudo apt update
         sudo apt install --download-only vulkan-sdk
     - name: Install Vulkan SDK
@@ -39,8 +32,9 @@ jobs:
 
     runs-on: windows-latest
     env:
-      CACHEDIR: cache-dir
-      VULKAN_SDK: C:\VulkanSDK\1.2.131.2
+      CacheDir: cache-dir
+#      VulkanSdk: C:\VulkanSDK\${{env.VulkanSDKVersion}}
+      VulkanSDKVersion: 1.2.131.2
 
     steps:
     - uses: actions/checkout@v2
@@ -48,26 +42,26 @@ jobs:
       id: cache
       uses: actions/cache@v1.1.2
       with:
-        path: ${{ env.CACHEDIR }}
+        path: ${{env.CacheDir}}
         key: VulkanSdk2
     - name: Download Vulkan SDK
       if: steps.cache.outputs.cache-hit != 'true'
       shell: powershell
       run: |
-        if (!(Test-Path -Path ${{ env.CACHEDIR }} )){
-          New-Item -ItemType directory -Path ${{ env.CACHEDIR }}
+        if (!(Test-Path -Path ${{env.CacheDir}} )){
+          New-Item -ItemType directory -Path ${{env.CacheDir}}
           Write-Output "New folder created"
         }
-        wget https://sdk.lunarg.com/sdk/download/1.2.131.2/windows/VulkanSDK-1.2.131.2-Installer.exe?u= -OutFile ${{ env.CACHEDIR }}/vulkan-sdk-1.2.131.2.exe
+        wget https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/windows/VulkanSDK-${{env.VulkanSDKVersion}}-Installer.exe?u= -OutFile ${{env.CacheDir}}/vulkan-sdk-${{env.VulkanSDKVersion}}.exe
     - name: Install Vulkan SDK
       shell: powershell
       run: |
-        $installer = Start-Process -FilePath ${{ env.CACHEDIR }}/vulkan-sdk-1.2.131.2.exe -Wait -PassThru -ArgumentList @("/S");
+        $installer = Start-Process -FilePath ${{env.CacheDir}}/vulkan-sdk-${{env.VulkanSDKVersion}}.exe -Wait -PassThru -ArgumentList @("/S");
         $installer.WaitForExit();
     - name: Check Vulkan SDK installation
       shell: powershell
       run: |
-        ls -R -d 1 C:\VulkanSDK\1.2.131.2
+        ls -R -d 1 C:\VulkanSDK\${{env.VulkanSDKVersion}}
 #        ( gci env:* | sort-object name )
     - name: CMake
       run: cmake . -G "Visual Studio 16 2019" -A x64
