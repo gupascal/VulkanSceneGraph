@@ -78,19 +78,19 @@ jobs:
     
     steps:
     - uses: actions/checkout@v2
-    - name: Download Vulkan SDK
-      run: wget -O vulkansdk-macos-1.2.131.2.tar.gz https://sdk.lunarg.com/sdk/download/1.2.131.2/mac/vulkansdk-macos-1.2.131.2.tar.gz?u=
-    - name: Extract Vulkan SDK
-      run: tar -zxvf vulkansdk-macos-1.2.131.2.tar.gz
+#    - name: Download Vulkan SDK
+#      run: wget -O vulkansdk-macos-1.2.131.2.tar.gz https://sdk.lunarg.com/sdk/download/1.2.131.2/mac/vulkansdk-macos-1.2.131.2.tar.gz?u=
+#    - name: Extract Vulkan SDK
+#      run: tar -zxvf vulkansdk-macos-1.2.131.2.tar.gz
     - name: Set Up Env Vars
       uses: allenevans/set-env@v1.0.0
       with:
         overwrite: true
         VULKAN_SDK: "./vulkansdk-macos-1.2.131.2"
-        VK_LAYER_PATH: "$VULKAN_SDK/etc/vulkan/explicit_layer.d"
-        VK_ICD_FILENAMES: "$VULKAN_SDK/etc/vulkan/icd.d/MoltenVK_icd.json"
-        PATH: "$VULKAN_SDK:$VULKAN_SDK/bin:$PATH"
-        DYLD_LIBRARY_PATH: "$VULKAN_SDK/lib:$DYLD_LIBRARY_PATH"
+        VK_LAYER_PATH: "${{env.VULKAN_SDK}}/etc/vulkan/explicit_layer.d"
+        VK_ICD_FILENAMES: "${{env.VULKAN_SDK}}/etc/vulkan/icd.d/MoltenVK_icd.json"
+        PATH: "${{env.VULKAN_SDK}}:${{env.VULKAN_SDK}}/bin:${{env.PATH}}"
+        DYLD_LIBRARY_PATH: "${{env.VULKAN_SDK}}/lib:$DYLD_LIBRARY_PATH"
     - name: Debug output
       run: |
         ls 
