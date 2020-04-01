@@ -43,8 +43,8 @@ jobs:
       if: steps.cache.outputs.cache-hit != 'true'
       shell: powershell
       run: |
-        if (!(Test-Path -Path $CACHEDIR )){
-          New-Item -ItemType directory -Path $CACHEDIR
+        if (!(Test-Path -Path ${{ CACHEDIR }} )){
+          New-Item -ItemType directory -Path ${{ CACHEDIR }}
           Write-Output "New folder created"
         }
         wget https://sdk.lunarg.com/sdk/download/1.2.131.2/windows/VulkanSDK-1.2.131.2-Installer.exe?u= -OutFile vulkan-sdk-1.2.131.2.exe
