@@ -18,6 +18,7 @@ jobs:
         ( wget -qO - http://packages.lunarg.com/lunarg-signing-key-pub.asc | sudo apt-key add - )
         sudo wget -qO /etc/apt/sources.list.d/lunarg-vulkan-1.2.131-bionic.list http://packages.lunarg.com/vulkan/1.2.131/lunarg-vulkan-1.2.131-bionic.list
         sudo apt update
+        sudo apt install --download-only vulkan-sdk
     - name: Install Vulkan SDK
       run: sudo apt install vulkan-sdk
     - name: CMake
@@ -64,5 +65,7 @@ jobs:
 #        setx /M VULKAN_SDK C:\VulkanSDK\1.2.131.2
     - name: CMake
       run: cmake . -G "Visual Studio 16 2019" -A x64
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.0
     - name: MSBuild
       run: MSBuild.exe ALL_BUILD.vcxproj -p:Configuration=Release
