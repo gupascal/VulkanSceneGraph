@@ -62,6 +62,8 @@ jobs:
 #        Write-Output "::set-env name=VULKAN_SDK::C:\\VulkanSDK\\1.2.131.2"
 #        setx /M VULKAN_SDK C:\VulkanSDK\1.2.131.2
     - name: CMake
+      shell: powershell
       run: cmake . -G "Visual Studio 16 2019" -A x64
-#    - name: MSBuild
-#      run: MSBuild.exe VSG.sln
+    - name: MSBuild
+      shell: powershell
+      run: MSBuild.exe ALL_BUILD.vcxproj -p:Configuration=Release
