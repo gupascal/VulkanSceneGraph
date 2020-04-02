@@ -98,6 +98,7 @@ jobs:
         export PATH="$VULKAN_SDK:$VULKAN_SDK/bin:$PATH"
         ls 
         echo "Home: $HOME"
+        ls $VULKAN_SDK
         echo "Workspace: $GITHUB_WORKSPACE"
         echo "Workspace: ${{env.WORKSPACE}}"
         echo "PWD: $PWD"
