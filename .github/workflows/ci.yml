@@ -84,10 +84,10 @@ jobs:
     - name: Set env
       run: |
         echo ::set-env name=WORKSPACE::$GITHUB_WORKSPACE
-        echo ::set-env name=VULKAN_SDK::${{WORKSPACE}}/vulkansdk-macos-1.2.131.2
-        echo ::set-env name=VK_LAYER_PATH::${{VULKAN_SDK}}/etc/vulkan/explicit_layer.d
-        echo ::set-env name=VK_ICD_FILENAMES::${{VULKAN_SDK}}/etc/vulkan/icd.d/MoltenVK_icd.json
-        echo ::set-env name=DYLD_LIBRARY_PATH::${{VULKAN_SDK}}/lib:$DYLD_LIBRARY_PATH
+        echo ::set-env name=VULKAN_SDK::${{env.WORKSPACE}}/vulkansdk-macos-1.2.131.2
+        echo ::set-env name=VK_LAYER_PATH::${{env.VULKAN_SDK}}/etc/vulkan/explicit_layer.d
+        echo ::set-env name=VK_ICD_FILENAMES::${{env.VULKAN_SDK}}/etc/vulkan/icd.d/MoltenVK_icd.json
+        echo ::set-env name=DYLD_LIBRARY_PATH::${{env.VULKAN_SDK}}/lib:$DYLD_LIBRARY_PATH
     - name: Download Vulkan SDK
       run: wget -O vulkansdk-macos-1.2.131.2.tar.gz https://sdk.lunarg.com/sdk/download/1.2.131.2/mac/vulkansdk-macos-1.2.131.2.tar.gz?u=
     - name: Extract Vulkan SDK
