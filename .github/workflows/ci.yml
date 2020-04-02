@@ -74,7 +74,7 @@ jobs:
   macos-build:
     runs-on: macos-latest
     env:
-      VULKAN_SDK: "$PWD/vulkansdk-macos-1.2.131.2"
+      VULKAN_SDK: "${{env.GITHUB_WORKSPACE}}/vulkansdk-macos-1.2.131.2"
       VK_LAYER_PATH: "$VULKAN_SDK/etc/vulkan/explicit_layer.d"
       VK_ICD_FILENAMES: "$VULKAN_SDK/etc/vulkan/icd.d/MoltenVK_icd.json"
       DYLD_LIBRARY_PATH: "$VULKAN_SDK/lib:$DYLD_LIBRARY_PATH"
@@ -89,6 +89,8 @@ jobs:
       run: |
         export PATH="$VULKAN_SDK:$VULKAN_SDK/bin:$PATH"
         ls 
+        echo "Home: ${{HOME}}"
+        echo "Workspace: ${{GITHUB_WORKSPACE}}"
         echo "PWD: $PWD"
         echo "Path SDK: $VULKAN_SDK"
         echo "VK_LAYER_PATH: $VK_LAYER_PATH"
