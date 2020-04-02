@@ -94,7 +94,7 @@ jobs:
       run: tar -zxvf vulkansdk-macos-1.2.131.2.tar.gz
     - name: Debug output
       run: |
-        DYLD_LIBRARY_PATH::"$VULKAN_SDK/lib:$DYLD_LIBRARY_PATH"
+        DYLD_LIBRARY_PATH="$VULKAN_SDK/lib:$DYLD_LIBRARY_PATH"
         export PATH="$VULKAN_SDK:$VULKAN_SDK/bin:$PATH"
         ls 
         echo "Home: $HOME"
