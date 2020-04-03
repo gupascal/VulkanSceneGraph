@@ -120,7 +120,7 @@ jobs:
         echo "Path: $PATH"
     - name: CMake
       run: |
-        export DYLD_LIBRARY_PATH::"$VULKAN_SDK/lib:$DYLD_LIBRARY_PATH"
+        export DYLD_LIBRARY_PATH="$VULKAN_SDK/lib:$DYLD_LIBRARY_PATH"
         export PATH="$VULKAN_SDK:$VULKAN_SDK/bin:$PATH"
         cmake . -G "Xcode"
       
