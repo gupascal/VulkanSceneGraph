@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VulkanSDKVersion: 1.2.131
+      InstallPath: "$GITHUB_WORKSPACE/../vsg-$GITHUB_SHA"
 #https://sdk.lunarg.com/sdk/download/1.2.131.2/linux/vulkansdk-linux-x86_64-1.2.131.2.tar.gz?u=
     steps:
     - uses: actions/checkout@v2
@@ -24,7 +25,7 @@ jobs:
     - name: Install Vulkan SDK
       run: sudo apt install vulkan-sdk
     - name: CMake
-      run: cmake -D CMAKE_INSTALL_PREFIX="$GITHUB_WORKSPACE/../vsg-$GITHUB_SHA" .
+      run: cmake -D CMAKE_INSTALL_PREFIX="${{env.InstallPath}}" .
     - name: make
       run: make -j 2
     - run: make install
@@ -32,7 +33,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: VsgLinux64
-        path: "$GITHUB_WORKSPACE/../vsg-$GITHUB_SHA"
+        path: "${{env.InstallPath}}"
 
   windows-build:
 
