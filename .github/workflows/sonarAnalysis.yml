@@ -10,7 +10,7 @@ jobs:
   linux-build:
     runs-on: ubuntu-latest
     env:
-      VULKAN_SDK: $GITHUB_WORKSPACE/$VulkanSDKVersion/x86_64
+      VULKAN_SDK: $GITHUB_WORKSPACE/../$VulkanSDKVersion/x86_64
 #      InstallPath: "../vsg"
     steps:
     - uses: actions/checkout@v2
@@ -24,7 +24,7 @@ jobs:
 #      if: steps.cache.outputs.cache-hit != 'true'
       run: |
         wget --no-cookies -O ../vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/linux/vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz?u=
-        tar -zxvf ../vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz -C ./
+        tar -zxvf ../vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz -C ../
     - name: Download Sonar
       run: |
         export SONAR_SCANNER_VERSION=4.2.0.1873
