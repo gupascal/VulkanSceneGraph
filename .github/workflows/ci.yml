@@ -122,5 +122,7 @@ jobs:
       run: |
         export DYLD_LIBRARY_PATH="$VULKAN_SDK/lib:$DYLD_LIBRARY_PATH"
         export PATH="$VULKAN_SDK:$VULKAN_SDK/bin:$PATH"
-        cmake . -G "Xcode"
+        cmake .
+    - name: Make
+      run: make -j 2
       
