@@ -1,20 +1,17 @@
 name: CI
-
 on:
   push:
   pull_request:
     branches:
       - master
-
+env:
+  VulkanSDKVersion: 1.2.131.2
 jobs:
   linux-build:
-
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     env:
-      VulkanSDKVersion: 1.2.131.2
-      VULKAN_SDK: $GITHUB_WORKSPACE/1.2.131.2/x86_64
+      VULKAN_SDK: $GITHUB_WORKSPACE/${{env.VulkanSDKVersion}}/x86_64
       InstallPath: "../vsg"
-#https://sdk.lunarg.com/sdk/download/1.2.131.2/linux/vulkansdk-linux-x86_64-1.2.131.2.tar.gz?u=
     steps:
     - uses: actions/checkout@v2
     - name: Cache
@@ -23,26 +20,17 @@ jobs:
       with:
         path: ${{env.VULKAN_SDK}}
         key: VulkanSdkExtractedLinux
-    - name: Download Vulkan SDK
+    - name: Download & Extract Vulkan SDK
       if: steps.cache.outputs.cache-hit != 'true'
-      run: wget --no-cookies -O ../vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/linux/vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz?u=
-    - name: Extract Vulkan SDK
-      if: steps.cache.outputs.cache-hit != 'true'
-      run: tar -zxvf ../vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz -C ./
-#    - name: Download Vulkan SDK
-#      run: |
-#        ( wget -qO - http://packages.lunarg.com/lunarg-signing-key-pub.asc | sudo apt-key add - )
-#        sudo wget -qO /etc/apt/sources.list.d/lunarg-vulkan-${{env.VulkanSDKVersion}}-bionic.list http://packages.lunarg.com/vulkan/${{env.VulkanSDKVersion}}/lunarg-vulkan-${{env.VulkanSDKVersion}}-bionic.list
-#        sudo apt update
-#        sudo apt install --download-only vulkan-sdk
-#    - name: Install Vulkan SDK
-#      run: sudo apt install vulkan-sdk
+      run: |
+        wget --no-cookies -O ../vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/linux/vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz?u=
+        tar -zxvf ../vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz -C ./
     - name: CMake
       run: |
-        echo $VULKAN_SDK
-        cmake -D Vulkan_INCLUDE_DIR="${{env.VULKAN_SDK}}/include" -D Vulkan_LIBRARY="${{env.VULKAN_SDK}}/lib/libvulkan.so" -D CMAKE_INSTALL_PREFIX="${{env.InstallPath}}" .
-    - name: make
-      run: make -j 2
+        cmake -D Vulkan_INCLUDE_DIR="${{env.VULKAN_SDK}}/include" \
+          -D Vulkan_LIBRARY="${{env.VULKAN_SDK}}/lib/libvulkan.so" \
+          -D CMAKE_INSTALL_PREFIX="${{env.InstallPath}}" .
+    - run: make -j 2
     - run: make install
     - name: Publish artifact
       uses: actions/upload-artifact@v1
@@ -51,12 +39,9 @@ jobs:
         path: "${{env.InstallPath}}"
 
   windows-build:
-
     runs-on: windows-latest
     env:
       CacheDir: cache-dir
-      VulkanSDKVersion: 1.2.131.2
-
     steps:
     - uses: actions/checkout@v2
     - name: Cache
@@ -69,21 +54,13 @@ jobs:
       if: steps.cache.outputs.cache-hit != 'true'
       shell: powershell
       run: |
-        if (!(Test-Path -Path ${{env.CacheDir}} )){
-          New-Item -ItemType directory -Path ${{env.CacheDir}}
-          Write-Output "New folder created"
-        }
+        if (!(Test-Path -Path ${{env.CacheDir}} )) { New-Item -ItemType directory -Path ${{env.CacheDir}} }
         Invoke-WebRequest -Uri https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/windows/VulkanSDK-${{env.VulkanSDKVersion}}-Installer.exe?u= -OutFile ${{env.CacheDir}}/vulkan-sdk-${{env.VulkanSDKVersion}}.exe
     - name: Install Vulkan SDK
       shell: powershell
       run: |
         $installer = Start-Process -FilePath ${{env.CacheDir}}/vulkan-sdk-${{env.VulkanSDKVersion}}.exe -Wait -PassThru -ArgumentList @("/S");
         $installer.WaitForExit();
-    - name: Check Vulkan SDK installation
-      shell: powershell
-      run: |
-        ls -R -d 1 C:\VulkanSDK\${{env.VulkanSDKVersion}}
-        ( gci env:* | sort-object name )
     - name: CMake
       run: cmake . -G "Visual Studio 16 2019" -A x64
       env:
@@ -95,9 +72,6 @@ jobs:
 
   macos-build:
     runs-on: macos-latest
-    env:
-      VulkanSDKVersion: 1.2.131.2
-    
     steps:
     - uses: actions/checkout@v2
     - name: Set env
@@ -112,12 +86,11 @@ jobs:
       with:
         path: ${{env.VULKAN_SDK}}
         key: VulkanSdkExtractedMacos
-    - name: Download Vulkan SDK
+    - name: Download & Extract Vulkan SDK
       if: steps.cache.outputs.cache-hit != 'true'
-      run: wget --no-cookies -O ../vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/mac/vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz?u=
-    - name: Extract Vulkan SDK
-      if: steps.cache.outputs.cache-hit != 'true'
-      run: tar -zxvf ../vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz -C ./
+      run: |
+        wget --no-cookies -O ../vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/mac/vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz?u=
+        tar -zxvf ../vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz -C ./
     - name: CMake
       run: |
         export DYLD_LIBRARY_PATH="$VULKAN_SDK/lib:$DYLD_LIBRARY_PATH"
