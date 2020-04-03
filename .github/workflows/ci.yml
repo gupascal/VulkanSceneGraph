@@ -10,7 +10,7 @@ jobs:
   linux-build:
     runs-on: ubuntu-latest
     env:
-      VULKAN_SDK: $GITHUB_WORKSPACE/${{env.VulkanSDKVersion}}/x86_64
+      VULKAN_SDK: $GITHUB_WORKSPACE/$VulkanSDKVersion/x86_64
       InstallPath: "../vsg"
     steps:
     - uses: actions/checkout@v2
