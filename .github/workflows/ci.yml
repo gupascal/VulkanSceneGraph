@@ -82,7 +82,7 @@ jobs:
     - name: Set env
       run: |
         echo ::set-env name=WORKSPACE::$GITHUB_WORKSPACE
-        VULKAN_SDK=$GITHUB_WORKSPACE/vulkansdk-macos-${{VulkanSDKVersion}}/macOS
+        VULKAN_SDK=$GITHUB_WORKSPACE/vulkansdk-macos-${{env.VulkanSDKVersion}}/macOS
         echo ::set-env name=VULKAN_SDK::$VULKAN_SDK
         echo ::set-env name=VK_LAYER_PATH::$VULKAN_SDK/etc/vulkan/explicit_layer.d
         echo ::set-env name=VK_ICD_FILENAMES::$VULKAN_SDK/etc/vulkan/icd.d/MoltenVK_icd.json
@@ -96,9 +96,9 @@ jobs:
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
         mkdir -p ${{env.CacheDir}}
-        wget --no-cookies -O ${{env.CacheDir}}/vulkansdk-macos-${{VulkanSDKVersion}}.tar.gz https://sdk.lunarg.com/sdk/download/${{VulkanSDKVersion}}/mac/vulkansdk-macos-${{VulkanSDKVersion}}.tar.gz?u=
+        wget --no-cookies -O ${{env.CacheDir}}/vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/mac/vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz?u=
     - name: Extract Vulkan SDK
-      run: tar -zxvf ${{env.CacheDir}}/vulkansdk-macos-${{VulkanSDKVersion}}.tar.gz -C ./
+      run: tar -zxvf ${{env.CacheDir}}/vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz -C ./
     - name: Debug output
       run: |
         DYLD_LIBRARY_PATH="$VULKAN_SDK/lib:$DYLD_LIBRARY_PATH"
