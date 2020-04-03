@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VulkanSDKVersion: 1.2.131.2
-      VULKAN_SDK: $GITHUB_WORKSPACE/vulkansdk-linux-x86_64-1.2.131.2
+      VULKAN_SDK: $GITHUB_WORKSPACE/1.2.131.2
       InstallPath: "../vsg"
 #https://sdk.lunarg.com/sdk/download/1.2.131.2/linux/vulkansdk-linux-x86_64-1.2.131.2.tar.gz?u=
     steps:
