@@ -32,11 +32,13 @@ jobs:
         curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip 
         unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
         export PATH=$SONAR_SCANNER_HOME/bin:$PATH
+        echo "::add-path::$SONAR_SCANNER_HOME/bin"
         export SONAR_SCANNER_OPTS="-server"
 
         curl --create-dirs -sSLo $HOME/.sonar/build-wrapper-linux-x86.zip https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip
         unzip -o $HOME/.sonar/build-wrapper-linux-x86.zip -d $HOME/.sonar/
         export PATH=$HOME/.sonar/build-wrapper-linux-x86:$PATH
+        echo "::add-path::$HOME/.sonar/build-wrapper-linux-x86"
     - name: CMake
       run: |
         cmake -D Vulkan_INCLUDE_DIR="${{env.VULKAN_SDK}}/include" \
