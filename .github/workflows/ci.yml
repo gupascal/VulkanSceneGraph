@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VulkanSDKVersion: 1.2.131
-      InstallPath: "$GITHUB_WORKSPACE/../vsg-$GITHUB_SHA"
+      InstallPath: "$GITHUB_WORKSPACE/../vsg-${GITHUB_SHA}"
 #https://sdk.lunarg.com/sdk/download/1.2.131.2/linux/vulkansdk-linux-x86_64-1.2.131.2.tar.gz?u=
     steps:
     - uses: actions/checkout@v2
