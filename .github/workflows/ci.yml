@@ -40,7 +40,7 @@ jobs:
     - name: CMake
       run: |
         echo $VULKAN_SDK
-        cmake -D CMAKE_INSTALL_PREFIX="${{env.InstallPath}}" .
+        cmake -D Vulkan_INCLUDE_DIR="${{env.VULKAN_SDK}}/include" -D Vulkan_LIBRARY="${{env.VULKAN_SDK}}/lib/libvulkan.so" -D CMAKE_INSTALL_PREFIX="${{env.InstallPath}}" .
     - name: make
       run: make -j 2
     - run: make install
