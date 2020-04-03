@@ -89,12 +89,6 @@ jobs:
       id: cache
       uses: actions/cache@v1.1.2
       with:
-        path: ${{env.CacheDir}}
-        key: VulkanSdkMacos
-    - name: Cache 2
-      id: cache2
-      uses: actions/cache@v1.1.2
-      with:
         path: ${{env.VULKAN_SDK}}
         key: VulkanSdkExtractedMacos
     - name: Download Vulkan SDK
@@ -103,7 +97,7 @@ jobs:
         mkdir -p ${{env.CacheDir}}
         wget --no-cookies -O ${{env.CacheDir}}/vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/mac/vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz?u=
     - name: Extract Vulkan SDK
-      if: steps.cache2.outputs.cache-hit != 'true'
+      if: steps.cache.outputs.cache-hit != 'true'
       run: tar -zxvf ${{env.CacheDir}}/vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz -C ./
     - name: CMake
       run: |
