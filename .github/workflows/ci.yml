@@ -16,16 +16,30 @@ jobs:
 #https://sdk.lunarg.com/sdk/download/1.2.131.2/linux/vulkansdk-linux-x86_64-1.2.131.2.tar.gz?u=
     steps:
     - uses: actions/checkout@v2
+    - name: Cache
+      id: cache
+      uses: actions/cache@v1.1.2
+      with:
+        path: ${{env.VULKAN_SDK}}
+        key: VulkanSdkExtractedMacos
     - name: Download Vulkan SDK
-      run: |
-        ( wget -qO - http://packages.lunarg.com/lunarg-signing-key-pub.asc | sudo apt-key add - )
-        sudo wget -qO /etc/apt/sources.list.d/lunarg-vulkan-${{env.VulkanSDKVersion}}-bionic.list http://packages.lunarg.com/vulkan/${{env.VulkanSDKVersion}}/lunarg-vulkan-${{env.VulkanSDKVersion}}-bionic.list
-        sudo apt update
-        sudo apt install --download-only vulkan-sdk
-    - name: Install Vulkan SDK
-      run: sudo apt install vulkan-sdk
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: wget --no-cookies -O ../vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/linux/vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz?u=
+    - name: Extract Vulkan SDK
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: tar -zxvf ../vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz -C ./
+#    - name: Download Vulkan SDK
+#      run: |
+#        ( wget -qO - http://packages.lunarg.com/lunarg-signing-key-pub.asc | sudo apt-key add - )
+#        sudo wget -qO /etc/apt/sources.list.d/lunarg-vulkan-${{env.VulkanSDKVersion}}-bionic.list http://packages.lunarg.com/vulkan/${{env.VulkanSDKVersion}}/lunarg-vulkan-${{env.VulkanSDKVersion}}-bionic.list
+#        sudo apt update
+#        sudo apt install --download-only vulkan-sdk
+#    - name: Install Vulkan SDK
+#      run: sudo apt install vulkan-sdk
     - name: CMake
       run: cmake -D CMAKE_INSTALL_PREFIX="${{env.InstallPath}}" .
+      env:
+        VULKAN_SDK: ./vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}
     - name: make
       run: make -j 2
     - run: make install
