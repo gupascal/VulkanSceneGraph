@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VulkanSDKVersion: 1.2.131
-      InstallPath: "$GITHUB_WORKSPACE/../vsg-${GITHUB_SHA}"
+      InstallPath: "../vsg"
 #https://sdk.lunarg.com/sdk/download/1.2.131.2/linux/vulkansdk-linux-x86_64-1.2.131.2.tar.gz?u=
     steps:
     - uses: actions/checkout@v2
@@ -81,7 +81,6 @@ jobs:
   macos-build:
     runs-on: macos-latest
     env:
-      CacheDir: cache-dir
       VulkanSDKVersion: 1.2.131.2
     
     steps:
@@ -100,12 +99,10 @@ jobs:
         key: VulkanSdkExtractedMacos
     - name: Download Vulkan SDK
       if: steps.cache.outputs.cache-hit != 'true'
-      run: |
-        mkdir -p ${{env.CacheDir}}
-        wget --no-cookies -O ${{env.CacheDir}}/vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/mac/vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz?u=
+      run: wget --no-cookies -O ../vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/mac/vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz?u=
     - name: Extract Vulkan SDK
       if: steps.cache.outputs.cache-hit != 'true'
-      run: tar -zxvf ${{env.CacheDir}}/vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz -C ./
+      run: tar -zxvf ../vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz -C ./
     - name: CMake
       run: |
         export DYLD_LIBRARY_PATH="$VULKAN_SDK/lib:$DYLD_LIBRARY_PATH"
