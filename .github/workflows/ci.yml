@@ -24,7 +24,7 @@ jobs:
     - name: Install Vulkan SDK
       run: sudo apt install vulkan-sdk
     - name: CMake
-      run: cmake -D CMAKE_PREFIX_PATH="$GITHUB_WORKSPACE/../vsg-GITHUB_SHA" .
+      run: cmake -D CMAKE_INSTALL_PREFIX="$GITHUB_WORKSPACE/../vsg-GITHUB_SHA" .
     - name: make
       run: make -j 2
     - run: make install
@@ -109,6 +109,6 @@ jobs:
       run: |
         export DYLD_LIBRARY_PATH="$VULKAN_SDK/lib:$DYLD_LIBRARY_PATH"
         export PATH="$VULKAN_SDK:$VULKAN_SDK/bin:$PATH"
-        cmake -D CMAKE_PREFIX_PATH="$GITHUB_WORKSPACE/../vsg-GITHUB_SHA" .
+        cmake -D CMAKE_INSTALL_PREFIX="$GITHUB_WORKSPACE/../vsg-GITHUB_SHA" .
     - name: Make
       run: make -j 2 || echo "Failed but ok"
