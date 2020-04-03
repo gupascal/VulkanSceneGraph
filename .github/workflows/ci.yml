@@ -11,7 +11,8 @@ jobs:
 
     runs-on: ubuntu-18.04
     env:
-      VulkanSDKVersion: 1.2.131
+      VulkanSDKVersion: 1.2.131.2
+      VULKAN_SDK: $GITHUB_WORKSPACE/vulkansdk-linux-x86_64-1.2.131.2
       InstallPath: "../vsg"
 #https://sdk.lunarg.com/sdk/download/1.2.131.2/linux/vulkansdk-linux-x86_64-1.2.131.2.tar.gz?u=
     steps:
@@ -21,7 +22,7 @@ jobs:
       uses: actions/cache@v1.1.2
       with:
         path: ${{env.VULKAN_SDK}}
-        key: VulkanSdkExtractedMacos
+        key: VulkanSdkExtractedLinux
     - name: Download Vulkan SDK
       if: steps.cache.outputs.cache-hit != 'true'
       run: wget --no-cookies -O ../vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/linux/vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz?u=
