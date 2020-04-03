@@ -100,7 +100,7 @@ jobs:
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
         mkdir -p ${{env.CacheDir}}
-        wget -O ${{env.CacheDir}}/vulkansdk-macos-1.2.131.2.tar.gz http://sdk.lunarg.com/sdk/download/1.2.131.2/mac/vulkansdk-macos-1.2.131.2.tar.gz?u=
+        wget --no-cookies -O ${{env.CacheDir}}/vulkansdk-macos-1.2.131.2.tar.gz https://sdk.lunarg.com/sdk/download/1.2.131.2/mac/vulkansdk-macos-1.2.131.2.tar.gz?u=
     - name: Extract Vulkan SDK
       run: tar -zxvf ${{env.CacheDir}}/vulkansdk-macos-1.2.131.2.tar.gz -C ./
     - name: Debug output
