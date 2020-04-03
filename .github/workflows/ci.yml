@@ -52,12 +52,10 @@ jobs:
         key: VulkanSdk2
     - name: Download Vulkan SDK
       if: steps.cache.outputs.cache-hit != 'true'
-      shell: powershell
       run: |
         if (!(Test-Path -Path ${{env.CacheDir}} )) { New-Item -ItemType directory -Path ${{env.CacheDir}} }
         Invoke-WebRequest -Uri https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/windows/VulkanSDK-${{env.VulkanSDKVersion}}-Installer.exe?u= -OutFile ${{env.CacheDir}}/vulkan-sdk-${{env.VulkanSDKVersion}}.exe
     - name: Install Vulkan SDK
-      shell: powershell
       run: |
         $installer = Start-Process -FilePath ${{env.CacheDir}}/vulkan-sdk-${{env.VulkanSDKVersion}}.exe -Wait -PassThru -ArgumentList @("/S");
         $installer.WaitForExit();
