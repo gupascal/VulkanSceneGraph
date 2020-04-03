@@ -49,7 +49,7 @@ jobs:
       uses: actions/cache@v1.1.2
       with:
         path: ${{env.CacheDir}}
-        key: VulkanSdk2
+        key: VulkanSdkWindows
     - name: Download Vulkan SDK
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
