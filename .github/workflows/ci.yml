@@ -38,9 +38,9 @@ jobs:
 #    - name: Install Vulkan SDK
 #      run: sudo apt install vulkan-sdk
     - name: CMake
-      run: cmake -D CMAKE_INSTALL_PREFIX="${{env.InstallPath}}" .
-      env:
-        VULKAN_SDK: ./vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}
+      run: |
+        echo $VULKAN_SDK
+        cmake -D CMAKE_INSTALL_PREFIX="${{env.InstallPath}}" .
     - name: make
       run: make -j 2
     - run: make install
