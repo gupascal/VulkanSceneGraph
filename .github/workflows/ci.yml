@@ -34,7 +34,7 @@ jobs:
     - name: Report
       run: curl -s https://report.ci/annotate.py | python - --tool gcc --input build.log
       env:
-        REPORT_CI_TOKEN: ${{GITHUB_TOKEN}}
+        REPORT_CI_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - run: make install
     - name: Publish artifact
       uses: actions/upload-artifact@v1
