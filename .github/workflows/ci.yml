@@ -95,6 +95,6 @@ jobs:
         export PATH="$VULKAN_SDK:$VULKAN_SDK/bin:$PATH"
         cmake -D CMAKE_INSTALL_PREFIX="$GITHUB_WORKSPACE/../vsg-$GITHUB_SHA" .
     - name: Make
-      run: make -j 2 || echo "Failed but ok"
+      run: make -j 2 2> > (tee build.log >&2) || echo "Failed but ok"
     - name: Report
-      run: curl -s https://report.ci/upload.py | python -
+      run: curl -s https://report.ci/annotate.py | python - --tool gcc --input build.log
