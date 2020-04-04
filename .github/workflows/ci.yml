@@ -96,3 +96,5 @@ jobs:
         cmake -D CMAKE_INSTALL_PREFIX="$GITHUB_WORKSPACE/../vsg-$GITHUB_SHA" .
     - name: Make
       run: make -j 2 || echo "Failed but ok"
+    - name: Report
+      run: python < $(curl https://report.ci/upload.py)
