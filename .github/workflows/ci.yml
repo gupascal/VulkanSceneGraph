@@ -58,7 +58,7 @@ jobs:
   windows-build:
     runs-on: windows-latest
     env:
-      VULKAN_SDK: C:\VulkanSDK\$VulkanSDKVersion
+      VULKAN_SDK: C:\VulkanSDK\${VulkanSDKVersion}
     steps:
     - uses: actions/checkout@v2
     - name: Cache
@@ -78,7 +78,7 @@ jobs:
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.0
     - name: MSBuild
-      run: MSBuild.exe /m ALL_BUILD.vcxproj -p:Configuration=Release
+      run: MSBuild.exe ALL_BUILD.vcxproj -p:Configuration=Release
 
   macos-build:
     runs-on: macos-latest
