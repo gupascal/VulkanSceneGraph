@@ -45,7 +45,7 @@ jobs:
         path: .
     - run: |
         ls 
-        make doc
+        make docs
         ls
     - run: make install
     - name: Publish artifact
