@@ -20,7 +20,7 @@ jobs:
       uses: actions/cache@v1.1.2
       with:
         path: ${{env.VULKAN_SDK}}
-        key: VulkanSdkExtractedLinux
+        key: VulkanSdk${{env.VulkanSDKVersion}}ExtractedLinux
     - name: Download & Extract Vulkan SDK
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
@@ -66,7 +66,7 @@ jobs:
       uses: actions/cache@v1.1.2
       with:
         path: ${{env.CacheDir}}
-        key: VulkanSdkWindows
+        key: VulkanSdk${{env.VulkanSDKVersion}}Windows
     - name: Download Vulkan SDK
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
@@ -100,7 +100,7 @@ jobs:
       uses: actions/cache@v1.1.2
       with:
         path: ${{env.VULKAN_SDK}}
-        key: VulkanSdkExtractedMacos
+        key: VulkanSdk${{env.VulkanSDKVersion}}ExtractedMacos
     - name: Download & Extract Vulkan SDK
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
