@@ -40,7 +40,7 @@ jobs:
 #      run: curl -s https://report.ci/annotate.py | python - --tool gcc --input build.log
 #      env:
 #        REPORT_CI_TOKEN: ${{secrets.GITHUB_TOKEN}}
-    - if: ${{env.BuildDocEnabled }}
+    - if: env.BuildDocEnabled == true
       run: make docs
     - name: Publish doc
       if: env.BuildDocEnabled == true
