@@ -54,7 +54,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: VSG Documentation
-        path: ${{env.DocFile}}
+        path: html
     - run: make install
     - name: Publish artifact
       uses: actions/upload-artifact@v1
