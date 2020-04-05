@@ -10,7 +10,7 @@ jobs:
   linux-build:
     runs-on: ubuntu-latest
     env:
-      BuildDocEnabled: ${{github.event_name == 'push' && github.ref == 'refs/heads/master'}}
+      BuildDocEnabled: ${{github.event_name == 'push' && github.ref == 'refs/heads/ci'}}
       InstallPath: "../vsg"
       VULKAN_SDK: $GITHUB_WORKSPACE/../$VulkanSDKVersion/x86_64
     steps:
