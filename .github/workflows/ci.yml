@@ -33,10 +33,10 @@ jobs:
           -D Vulkan_LIBRARY="${{env.VULKAN_SDK}}/lib/libvulkan.so" \
           -D CMAKE_INSTALL_PREFIX="${{env.InstallPath}}" .
     - run: make -j 2 >2 >(tee build.log >&2)
-    - name: Report
-      run: curl -s https://report.ci/annotate.py | python - --tool gcc --input build.log
-      env:
-        REPORT_CI_TOKEN: ${{secrets.GITHUB_TOKEN}}
+#    - name: Report
+#      run: curl -s https://report.ci/annotate.py | python - --tool gcc --input build.log
+#      env:
+#        REPORT_CI_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - run: make install
     - name: Publish artifact
       uses: actions/upload-artifact@v1
