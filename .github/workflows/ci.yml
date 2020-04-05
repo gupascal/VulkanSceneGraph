@@ -58,7 +58,7 @@ jobs:
   windows-build:
     runs-on: windows-latest
     env:
-      VULKAN_SDK: C:\VulkanSDK\${{env.VulkanSDKVersion}}
+      VULKAN_SDK: C:\VulkanSDK\${{VulkanSDKVersion}}
     steps:
     - uses: actions/checkout@v2
     - name: Cache
