@@ -5,7 +5,7 @@ on:
     branches:
       - master
 env:
-  VulkanSDKVersion: 1.2.131.2
+  VulkanSDKVersion: 1.1.130.0
 jobs:
   linux-build:
     runs-on: ubuntu-latest
@@ -113,5 +113,5 @@ jobs:
         cmake -D CMAKE_INSTALL_PREFIX="$GITHUB_WORKSPACE/../vsg-$GITHUB_SHA" .
     - name: Make
       run: make -j 2 >2 >(tee build.log >&2) || echo "Failed but ok"
-    - name: Report
-      run: curl -s https://report.ci/annotate.py | python - --tool gcc --input build.log
+#    - name: Report
+#      run: curl -s https://report.ci/annotate.py | python - --tool gcc --input build.log
