@@ -76,7 +76,7 @@ jobs:
       run: |
         $installer = Start-Process -FilePath ${{env.CacheDir}}/vulkan-sdk-${{env.VulkanSDKVersion}}.exe -Wait -PassThru -ArgumentList @("/S");
         $installer.WaitForExit();
-        echo "::set-env name=VULKAN_SDK::\"C:\VulkanSDK\${{env.VulkanSDKVersion}}\"";
+        echo "::set-env name=VULKAN_SDK::C:\VulkanSDK\${{env.VulkanSDKVersion}}";
     - name: CMake
       run: cmake . -G "Visual Studio 16 2019" -A x64
     - name: Add MSBuild to PATH
