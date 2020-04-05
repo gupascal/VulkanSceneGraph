@@ -27,7 +27,7 @@ jobs:
         wget --no-cookies -O ../vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/linux/vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz?u=
         tar -zxf ../vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz -C ../
     - name: Install Doxygen
-      if: BuildDocEnabled
+      if: env.BuildDocEnabled
       run: sudo apt install doxygen graphviz
     - name: CMake
       run: |
@@ -40,10 +40,10 @@ jobs:
 #      run: curl -s https://report.ci/annotate.py | python - --tool gcc --input build.log
 #      env:
 #        REPORT_CI_TOKEN: ${{secrets.GITHUB_TOKEN}}
-    - if: BuildDocEnabled
+    - if: env.BuildDocEnabled
       run: make docs
     - name: Publish doc
-      if: BuildDocEnabled
+      if: env.BuildDocEnabled
       uses: actions/upload-artifact@v1
       with:
         name: VSG Documentation
