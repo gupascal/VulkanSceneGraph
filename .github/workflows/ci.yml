@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       VULKAN_SDK: $GITHUB_WORKSPACE/../$VulkanSDKVersion/x86_64
-      DocFile: ${{GITHUB_WORKSPACE}}/vsg-doc-${{GITHUB_SHA}}.zip
       InstallPath: "../vsg"
     steps:
     - uses: actions/checkout@v2
@@ -48,7 +47,9 @@ jobs:
         ls 
         make docs
         ls
-        zip -r ${{env.DocFile}} html
+        DocFile=$GITHUB_WORKSPACE/vsg-doc-$GITHUB_SHA.zip
+        echo ::set-env name=DocFile::$DocFile
+        zip -r $DocFile html
     - name: Publish doc
       uses: actions/upload-artifact@v1
       with:
