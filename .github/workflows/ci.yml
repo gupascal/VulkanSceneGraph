@@ -26,7 +26,7 @@ jobs:
         wget --no-cookies -O ../vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/linux/vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz?u=
         tar -zxf ../vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz -C ../
     - name: Install Doxygen
-      run: sudo apt install doxygen
+      run: sudo apt install doxygen graphviz
     - name: CMake
       run: |
         cmake -D Vulkan_INCLUDE_DIR="${{env.VULKAN_SDK}}/include" \
