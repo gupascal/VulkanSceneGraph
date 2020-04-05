@@ -31,6 +31,7 @@ jobs:
           -D Vulkan_LIBRARY="${{env.VULKAN_SDK}}/lib/libvulkan.so" \
           -D CMAKE_INSTALL_PREFIX="${{env.InstallPath}}" .
     - run: make -j 2 >2 >(tee build.log >&2)
+    - run: make doc
     - name: Report
       run: curl -s https://report.ci/annotate.py | python - --tool gcc --input build.log
       env:
