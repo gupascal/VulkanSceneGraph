@@ -62,7 +62,7 @@ jobs:
 #      run: curl -s https://report.ci/annotate.py | python - --tool gcc --input build.log
 #      env:
 #        REPORT_CI_TOKEN: ${{secrets.GITHUB_TOKEN}}
-    - run: | make -j 2 docs
+    - run: make -j 2 docs
     - name: Publish doc
       uses: actions/upload-artifact@v1
       with:
