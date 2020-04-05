@@ -24,15 +24,15 @@ jobs:
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
         wget --no-cookies -O ../vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/linux/vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz?u=
-        tar -zxvf ../vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz -C ../
+        tar -zxf ../vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz -C ../
+    - name: Install Doxygen
+      run: sudo apt install doxygen
     - name: CMake
       run: |
         cmake -D Vulkan_INCLUDE_DIR="${{env.VULKAN_SDK}}/include" \
           -D Vulkan_LIBRARY="${{env.VULKAN_SDK}}/lib/libvulkan.so" \
           -D CMAKE_INSTALL_PREFIX="${{env.InstallPath}}" .
     - run: make -j 2 >2 >(tee build.log >&2)
-    - run: sudo apt install doxygen
-    - run: make doc
     - name: Report
       run: curl -s https://report.ci/annotate.py | python - --tool gcc --input build.log
       env:
@@ -94,7 +94,7 @@ jobs:
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
         wget --no-cookies -O ../vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/mac/vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz?u=
-        tar -zxvf ../vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz -C ../
+        tar -zxf ../vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz -C ../
     - name: CMake
       run: |
         export DYLD_LIBRARY_PATH="$VULKAN_SDK/lib:$DYLD_LIBRARY_PATH"
