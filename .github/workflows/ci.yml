@@ -14,30 +14,6 @@ jobs:
       InstallPath: "../vsg"
     steps:
     - uses: actions/checkout@v2
-    - name: Dump GitHub context
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: echo "$GITHUB_CONTEXT"
-    - name: Dump job context
-      env:
-        JOB_CONTEXT: ${{ toJson(job) }}
-      run: echo "$JOB_CONTEXT"
-    - name: Dump steps context
-      env:
-        STEPS_CONTEXT: ${{ toJson(steps) }}
-      run: echo "$STEPS_CONTEXT"
-    - name: Dump runner context
-      env:
-        RUNNER_CONTEXT: ${{ toJson(runner) }}
-      run: echo "$RUNNER_CONTEXT"
-    - name: Dump strategy context
-      env:
-        STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-      run: echo "$STRATEGY_CONTEXT"
-    - name: Dump matrix context
-      env:
-        MATRIX_CONTEXT: ${{ toJson(matrix) }}
-      run: echo "$MATRIX_CONTEXT"
     - name: Cache
       id: cache
       uses: actions/cache@v1.1.2
@@ -50,6 +26,7 @@ jobs:
         wget --no-cookies -O ../vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/linux/vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz?u=
         tar -zxf ../vulkansdk-linux-x86_64-${{env.VulkanSDKVersion}}.tar.gz -C ../
     - name: Install Doxygen
+      if: github.event_name == "push" && github.ref == "refs/heads/ci"
       run: sudo apt install doxygen graphviz
     - name: CMake
       run: |
@@ -62,8 +39,10 @@ jobs:
 #      run: curl -s https://report.ci/annotate.py | python - --tool gcc --input build.log
 #      env:
 #        REPORT_CI_TOKEN: ${{secrets.GITHUB_TOKEN}}
-    - run: make -j 2 docs
+    - if: github.event_name == "push" && github.ref == "refs/heads/ci"
+      run: make docs
     - name: Publish doc
+      if: github.event_name == "push" && github.ref == "refs/heads/ci"
       uses: actions/upload-artifact@v1
       with:
         name: VSG Documentation
