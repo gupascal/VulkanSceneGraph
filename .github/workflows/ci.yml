@@ -10,7 +10,7 @@ jobs:
   linux-build:
     runs-on: ubuntu-latest
     env:
-      BuildDocEnabled: ${{github.event_name == 'push' && github.ref == 'refs/heads/ci'}}
+      BuildDocEnabled: ${{github.event_name == 'push' && github.ref == 'refs/heads/master'}}
       InstallPath: "../vsg"
       VULKAN_SDK: $GITHUB_WORKSPACE/../$VulkanSDKVersion/x86_64
     steps:
@@ -83,7 +83,7 @@ jobs:
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.0
     - name: MSBuild
-      run: MSBuild.exe ALL_BUILD.vcxproj -p:Configuration=Release -m
+      run: MSBuild.exe /m ALL_BUILD.vcxproj -p:Configuration=Release
 
   macos-build:
     runs-on: macos-latest
