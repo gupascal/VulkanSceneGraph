@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       VULKAN_SDK: $GITHUB_WORKSPACE/../$VulkanSDKVersion/x86_64
-      DocFile: ${{env.GITHUB_WORKSPACE}}/vsg-doc-${{env.GITHUB_SHA}}.zip
+      DocFile: ${{GITHUB_WORKSPACE}}/vsg-doc-${{GITHUB_SHA}}.zip
       InstallPath: "../vsg"
     steps:
     - uses: actions/checkout@v2
