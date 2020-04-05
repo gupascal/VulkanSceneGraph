@@ -61,22 +61,23 @@ jobs:
       CacheDir: cache-dir
     steps:
     - uses: actions/checkout@v2
+    - run: echo "::set-env name=VULKAN_SDK::C:\VulkanSDK\${{env.VulkanSDKVersion}}"
     - name: Cache
       id: cache
       uses: actions/cache@v1.1.2
       with:
-        path: ${{env.CacheDir}}
-        key: VulkanSdk${{env.VulkanSDKVersion}}Windows
+        path: ${{env.VULKAN_SDK}}
+        key: VulkanSdk${{env.VulkanSDKVersion}}WindowsExtracted
     - name: Download Vulkan SDK
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
         if (!(Test-Path -Path ${{env.CacheDir}} )) { New-Item -ItemType directory -Path ${{env.CacheDir}} }
         Invoke-WebRequest -Uri https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/windows/VulkanSDK-${{env.VulkanSDKVersion}}-Installer.exe?u= -OutFile ${{env.CacheDir}}/vulkan-sdk-${{env.VulkanSDKVersion}}.exe
     - name: Install Vulkan SDK
+      if: steps.cache.outputs.cache-hit != 'true'
       run: |
         $installer = Start-Process -FilePath ${{env.CacheDir}}/vulkan-sdk-${{env.VulkanSDKVersion}}.exe -Wait -PassThru -ArgumentList @("/S");
         $installer.WaitForExit();
-        echo "::set-env name=VULKAN_SDK::C:\VulkanSDK\${{env.VulkanSDKVersion}}";
     - name: CMake
       run: cmake . -G "Visual Studio 16 2019" -A x64
     - name: Add MSBuild to PATH
