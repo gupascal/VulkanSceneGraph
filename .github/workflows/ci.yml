@@ -99,7 +99,7 @@ jobs:
     - name: Download & Extract Vulkan SDK
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
-        wget --no-cookies -O ../vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/mac/vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz?u=
+        wget --no-cookies --verbose --tries=40 -O ../vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz https://sdk.lunarg.com/sdk/download/${{env.VulkanSDKVersion}}/mac/vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz?u=
         tar -zxf ../vulkansdk-macos-${{env.VulkanSDKVersion}}.tar.gz -C ../
     - name: CMake
       run: |
