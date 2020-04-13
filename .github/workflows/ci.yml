@@ -106,7 +106,7 @@ jobs:
         export PATH="$VULKAN_SDK:$VULKAN_SDK/bin:$PATH"
         cmake -D CMAKE_INSTALL_PREFIX="$GITHUB_WORKSPACE/../vsg-$GITHUB_SHA" .
     - name: Make
-      run: make -j 2 |& tee build.log
+      run: make -j 2 2>&1 | tee build.log
     - if: always()
       run: cat build.log
     - name: Report
