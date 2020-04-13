@@ -78,7 +78,7 @@ jobs:
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.0
     - name: MSBuild
-      run: MSBuild.exe ALL_BUILD.vcxproj -p:Configuration=Release 2> >(tee build.log >&2)
+      run: MSBuild.exe ALL_BUILD.vcxproj -p:Configuration=Release 2| tee build.log >&2
     - name: Report
       if: always()
       run: curl -s https://report.ci/annotate.py | python - --tool msvc --input build.log
