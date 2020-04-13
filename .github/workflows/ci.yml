@@ -107,5 +107,8 @@ jobs:
         cmake -D CMAKE_INSTALL_PREFIX="$GITHUB_WORKSPACE/../vsg-$GITHUB_SHA" .
     - name: Make
       run: make -j 2 >2 >(tee build.log >&2) || echo "Failed but ok"
-#    - name: Report
-#      run: curl -s https://report.ci/annotate.py | python - --tool gcc --input build.log
+    - name: Report
+      if: always()
+      run: curl -s https://report.ci/annotate.py | python - --tool gcc --input build.log
+      env:
+        REPORT_CI_TOKEN: ${{secrets.REPORT_CI_TOKEN}}
