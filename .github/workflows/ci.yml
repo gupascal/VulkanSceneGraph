@@ -34,7 +34,7 @@ jobs:
         cmake -D Vulkan_INCLUDE_DIR="${{env.VULKAN_SDK}}/include" \
           -D Vulkan_LIBRARY="${{env.VULKAN_SDK}}/lib/libvulkan.so" \
           -D CMAKE_INSTALL_PREFIX="${{env.InstallPath}}" .
-    - run: make -j 2 >2 >(tee build.log >&2)
+    - run: (make -j 2 >2 >(tee build.log >&2))
     - name: Report
       run: curl -s https://report.ci/annotate.py | python - --tool gcc --input build.log
       env:
@@ -106,7 +106,9 @@ jobs:
         export PATH="$VULKAN_SDK:$VULKAN_SDK/bin:$PATH"
         cmake -D CMAKE_INSTALL_PREFIX="$GITHUB_WORKSPACE/../vsg-$GITHUB_SHA" .
     - name: Make
-      run: make -j 2 >2 >(tee build.log >&2) || echo "Failed but ok"
+      run: make -j 2 >2 >(tee build.log >&2)
+    - if: always()
+      run: cat build.log
     - name: Report
       if: always()
       run: curl -s https://report.ci/annotate.py | python - --tool gcc --input build.log
